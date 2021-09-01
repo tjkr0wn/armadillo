@@ -1,4 +1,4 @@
-#include "bits.h"
+#include <bits.h>
 
 unsigned int bits(unsigned int number, unsigned int start, unsigned int end){
     unsigned int amount = (end - start) + 1;

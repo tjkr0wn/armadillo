@@ -2,17 +2,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "adefs.h"
-#include "bits.h"
-#include "common.h"
-#include "instruction.h"
-#include "strext.h"
+#include <adefs.h>
+#include <bits.h>
+#include <common.h>
+#include <instruction.h>
+#include <utils.h>
+#include <strext.h>
 
-#include "BranchExcSys.h"
-#include "DataProcessingImmediate.h"
-#include "DataProcessingFloatingPoint.h"
-#include "DataProcessingRegister.h"
-#include "LoadsAndStores.h"
+#include <BranchExcSys.h>
+#include <DataProcessingImmediate.h>
+#include <DataProcessingFloatingPoint.h>
+#include <DataProcessingRegister.h>
+#include <LoadsAndStores.h>
 
 static int _ArmadilloDisassemble(struct instruction *i,
         struct ad_insn **_out){
