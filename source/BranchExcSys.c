@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "adefs.h"
-#include "bits.h"
-#include "common.h"
-#include "instruction.h"
-#include "utils.h"
-#include "strext.h"
+#include <adefs.h>
+#include <bits.h>
+#include <common.h>
+#include <instruction.h>
+#include <utils.h>
+#include <strext.h>
 
 static int DisassembleConditionalImmediateBranchInstr(struct instruction *i,
         struct ad_insn *out){

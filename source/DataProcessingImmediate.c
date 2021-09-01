@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "adefs.h"
-#include "bits.h"
-#include "common.h"
-#include "instruction.h"
-#include "utils.h"
-#include "strext.h"
+#include <adefs.h>
+#include <bits.h>
+#include <common.h>
+#include <instruction.h>
+#include <utils.h>
+#include <strext.h>
 
 static int DisassemblePCRelativeAddressingInstr(struct instruction *i,
         struct ad_insn *out){
@@ -562,7 +562,7 @@ static int DisassembleBitfieldInstr(struct instruction *i,
     ADD_FIELD(out, imms);
     ADD_FIELD(out, Rn);
     ADD_FIELD(out, Rd);
-   
+
     const char *Rn_s = GET_GEN_REG(registers, Rn, PREFER_ZR);
     const char *Rd_s = GET_GEN_REG(registers, Rd, PREFER_ZR);
 
@@ -829,7 +829,7 @@ static int DisassembleExtractInstr(struct instruction *i,
 
     ADD_REG_OPERAND(out, Rd, sz, PREFER_ZR, _SYSREG(AD_NONE), _RTBL(registers));
     ADD_REG_OPERAND(out, Rn, sz, PREFER_ZR, _SYSREG(AD_NONE), _RTBL(registers));
-    
+
     if(Rd != Rm)
         ADD_REG_OPERAND(out, Rm, sz, PREFER_ZR, _SYSREG(AD_NONE), _RTBL(registers));
 

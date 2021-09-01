@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "adefs.h"
-#include "bits.h"
-#include "common.h"
-#include "instruction.h"
-#include "utils.h"
-#include "strext.h"
+#include <adefs.h>
+#include <bits.h>
+#include <common.h>
+#include <instruction.h>
+#include <utils.h>
+#include <strext.h>
 
 #define NO_ALLOCATE 0
 #define POST_INDEXED 1
@@ -641,7 +641,7 @@ static int DisassembleLoadAndStoreExclusiveInstr(struct instruction *i,
             instr_id = AD_INSTR_CASALB;
         }
 
-        const char *suffix = NULL; 
+        const char *suffix = NULL;
 
         if(size == 0)
             suffix = "b";
@@ -749,7 +749,7 @@ static int DisassembleLoadAndStoreExclusiveInstr(struct instruction *i,
         instr_id = tab[encoding].instr_id;
 
         const char *Rs_s = GET_GEN_REG(AD_RTBL_GEN_32, Rs, PREFER_ZR);
-        
+
         const char **Rt_Rtbl = AD_RTBL_GEN_32;
         unsigned Rt_Sz = _32_BIT;
 
@@ -927,7 +927,7 @@ static int DisassembleLDAPR_STLRInstr(struct instruction *i,
 
         concat(&DECODE_STR(out), "%s %s", instr_s, Rt_s);
     }
-    
+
     ADD_REG_OPERAND(out, Rn, _SZ(_64_BIT), NO_PREFER_ZR, _SYSREG(AD_NONE),
             _RTBL(AD_RTBL_GEN_64));
 
@@ -1105,7 +1105,7 @@ static int DisassembleLoadAndStoreRegisterPairInstr(struct instruction *i,
 
     if(L == 0){
         instr_id = AD_INSTR_STP;
-        
+
         concat(&DECODE_STR(out), "st");
     }
     else{
@@ -2401,7 +2401,7 @@ static int DisassembleAtomicMemoryInstr(struct instruction *i,
             return 1;
 
         concat(&DECODE_STR(out), "%s ", alias.instr_s);
-        
+
         instr_id = alias.instr_id;
     }
     else{
@@ -2413,7 +2413,7 @@ static int DisassembleAtomicMemoryInstr(struct instruction *i,
         instr_id = instr.instr_id;
     }
 
-    if(instr_id == AD_INSTR_LDAPR || instr_id == AD_INSTR_LDAPRB || 
+    if(instr_id == AD_INSTR_LDAPR || instr_id == AD_INSTR_LDAPRB ||
             instr_id == AD_INSTR_LDAPRH){
         ADD_REG_OPERAND(out, Rt, sz, PREFER_ZR, _SYSREG(AD_NONE), registers);
 
@@ -2465,7 +2465,7 @@ static int DisassembleLoadAndStoreRegisterOffsetInstr(struct instruction *i,
 
     const char **registers = AD_RTBL_GEN_32;
     size_t sz = _32_BIT;
-    
+
     int fp = 0;
 
     if(V == 0 && (opc == 2 || size == 3)){
@@ -2564,7 +2564,7 @@ static int DisassembleLoadAndStoreRegisterOffsetInstr(struct instruction *i,
 
             if(S){
                 ADD_IMM_OPERAND(out, AD_IMM_UINT, 3);
-                
+
                 concat(&DECODE_STR(out), " #3");
             }
 

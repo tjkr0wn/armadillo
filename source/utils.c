@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "utils.h"
+#include <utils.h>
 
 /* Thanks https://github.com/xerub/macho/blob/master/patchfinder64.c */
 static unsigned long RORZeroExtendOnes(unsigned int M, unsigned int N,

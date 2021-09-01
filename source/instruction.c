@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "instruction.h"
+#include <instruction.h>
 
 struct instruction *instruction_new(unsigned int opcode, unsigned long PC){
     struct instruction *i = malloc(sizeof(struct instruction));

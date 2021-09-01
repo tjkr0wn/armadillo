@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "adefs.h"
-#include "bits.h"
-#include "common.h"
-#include "instruction.h"
-#include "utils.h"
-#include "strext.h"
+#include <adefs.h>
+#include <bits.h>
+#include <common.h>
+#include <instruction.h>
+#include <utils.h>
+#include <strext.h>
 
 #define SHIFTED 0
 #define EXTENDED 1
@@ -19,7 +19,7 @@ static int DisassembleDataProcessingTwoSourceInstr(struct instruction *i,
         struct ad_insn *out){
     unsigned sf = bits(i->opcode, 31, 31);
     unsigned S = bits(i->opcode, 29, 29);
-    unsigned Rm = bits(i->opcode, 16, 20); 
+    unsigned Rm = bits(i->opcode, 16, 20);
     unsigned opcode = bits(i->opcode, 10, 15);
     unsigned Rn = bits(i->opcode, 5, 9);
     unsigned Rd = bits(i->opcode, 0, 4);
@@ -614,7 +614,7 @@ static int DisassembleAddSubtractCarryInstr(struct instruction *i,
 
     if(OOB(idx, tab))
         return 1;
-    
+
     const char *instr_s = tab[idx].instr_s;
     int instr_id = tab[idx].instr_id;
 
@@ -659,7 +659,7 @@ static int DisassembleRotateRightIntoFlagsInstr(struct instruction *i,
     unsigned Rn = bits(i->opcode, 5, 9);
     unsigned o2 = bits(i->opcode, 4, 4);
     unsigned mask = bits(i->opcode, 0, 3);
-    
+
     if(sf != 1 && op != 0 && S != 1 && o2 != 0)
         return 1;
 
@@ -834,7 +834,7 @@ static int DisassembleConditionalSelectInstr(struct instruction *i,
 
     const char *instr_s = tab[idx].instr_s;
     int instr_id = tab[idx].instr_id;
-    
+
     if(instr_id == AD_INSTR_CSINC || instr_id == AD_INSTR_CSINV){
         if(Rm != 0x1f && (cond >> 1) != 7 && Rn != 0x1f && Rn == Rm){
             instr_s = instr_id == AD_INSTR_CSINC ? "cinc" : "cinv";
@@ -913,7 +913,7 @@ static int DisassembleDataProcessingThreeSourceInstr(struct instruction *i,
 
     const char *instr_s = NULL;
     int instr_id = AD_NONE;
-    
+
     if(op31 == 0){
         const char **registers = sf == 1 ? AD_RTBL_GEN_64 : AD_RTBL_GEN_32;
         int sz = sf == 1 ? _64_BIT : _32_BIT;
@@ -1031,7 +1031,7 @@ static int DisassembleDataProcessingThreeSourceInstr(struct instruction *i,
 int DataProcessingRegisterDisassemble(struct instruction *i,
         struct ad_insn *out){
     int result = 0;
-    
+
     unsigned op0 = bits(i->opcode, 30, 30);
     unsigned op1 = bits(i->opcode, 28, 28);
     unsigned op2 = bits(i->opcode, 21, 24);

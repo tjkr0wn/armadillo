@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "adefs.h"
-#include "bits.h"
-#include "common.h"
-#include "instruction.h"
-#include "utils.h"
-#include "strext.h"
+#include <adefs.h>
+#include <bits.h>
+#include <common.h>
+#include <instruction.h>
+#include <utils.h>
+#include <strext.h>
 
 static int DisassembleCryptographicAESInstr(struct instruction *i,
         struct ad_insn *out){
@@ -392,7 +392,7 @@ static int DisassembleAdvancedSIMDCopyInstr(struct instruction *i,
     concat(&DECODE_STR(out), ", %s", Rn_s);
 
     /* DUP (general) or INS (general) */
-    if((unaliased_instr_id == AD_INSTR_DUP && imm4 == 1) || 
+    if((unaliased_instr_id == AD_INSTR_DUP && imm4 == 1) ||
             (unaliased_instr_id == AD_INSTR_INS && op == 0)){
         /* in this case, we're done constructing the decode string */
         SET_INSTR_ID(out, instr_id);
@@ -436,7 +436,7 @@ static int DisassembleAdvancedSIMDThreeSameInstr(struct instruction *i,
     unsigned a = bits(i->opcode, 23, 23);
     unsigned size = bits(i->opcode, 22, 23);
     unsigned Rm = bits(i->opcode, 16, 20);
-    
+
     unsigned opcode = 0;
 
     if(fp16)
@@ -677,7 +677,7 @@ static int DisassembleAdvancedSIMDThreeSameInstr(struct instruction *i,
         const char **rtbls[] = {
             AD_RTBL_FP_8, AD_RTBL_FP_16, AD_RTBL_FP_32, AD_RTBL_FP_64
         };
-        
+
         unsigned sizes[] = {
             _8_BIT, _16_BIT, _32_BIT, _64_BIT
         };
@@ -686,7 +686,7 @@ static int DisassembleAdvancedSIMDThreeSameInstr(struct instruction *i,
         const char *T = NULL;
 
         unsigned sz = 0;
-        
+
         if(opcode == 0){
             if(scalar)
                 return 1;
@@ -722,7 +722,7 @@ static int DisassembleAdvancedSIMDThreeSameInstr(struct instruction *i,
 
             if(!scalar && !T)
                 return 1;
-            
+
             if(scalar){
                 rtbl = rtbls[size];
                 sz = sizes[size];
@@ -1478,7 +1478,7 @@ static int DisassembleAdvancedSIMDThreeSameInstr(struct instruction *i,
 
                 return 0;
             }
-            
+
             if(scalar){
                 rtbl = rtbls[2 + _sz];
                 sz = sizes[2 + _sz];
@@ -1784,7 +1784,7 @@ static int DisassembleAdvancedSIMDTwoRegisterMiscellaneousInstr(struct instructi
         else{
             if((size >> 1) == 1)
                 return 1;
-            
+
             instr_s = size == 0 ? "not" : "rbit";
             instr_id = size == 0 ? AD_INSTR_NOT : AD_INSTR_RBIT;
         }
@@ -2676,7 +2676,7 @@ static int DisassembleAdvancedSIMDThreeDifferentInstr(struct instruction *i,
 
         Rd_Rtbl = AD_RTBL_FP_V_128;
         Rn_Rm_Rtbl = AD_RTBL_FP_V_128;
-        
+
         Rd_sz = _128_BIT;
         Rn_Rm_sz = _128_BIT;
     }
@@ -2875,7 +2875,7 @@ static int DisassembleAdvancedSIMDModifiedImmediateInstr(struct instruction *i,
 
     if(!Rd_Rtbl)
         return 1;
-    
+
     const char *Rd_s = GET_FP_REG(Rd_Rtbl, Rd);
 
     ADD_REG_OPERAND(out, Rd, Rd_sz, NO_PREFER_ZR, _SYSREG(AD_NONE), Rd_Rtbl);
@@ -2990,7 +2990,7 @@ static int DisassembleAdvancedSIMDShiftByImmediateInstr(struct instruction *i,
             return 1;
 
         instr_s = tab[opcode].instr_s;
-        
+
         if(!instr_s)
             return 1;
 
@@ -3361,7 +3361,7 @@ static int DisassembleAdvancedSIMDXIndexedElementInstr(struct instruction *i,
 
     unsigned index = 0;
 
-    if((U == 1 && opcode == 0) || opcode == 2 || (U == 0 && opcode == 3) || 
+    if((U == 1 && opcode == 0) || opcode == 2 || (U == 0 && opcode == 3) ||
             (U == 1 && opcode == 4) || opcode == 6 ||
             (U == 0 && opcode == 7) || (U == 0 && opcode == 8) || opcode == 10 ||
             (U == 0 && opcode == 11) || (U == 0 && opcode == 12) || opcode == 13 ||
@@ -3943,7 +3943,7 @@ static int DisassembleAdvancedSIMDAcrossLanesInstr(struct instruction *i,
     else{
         if(opcode != 12 && opcode != 15)
             return 1;
-            
+
         if(U == 0 && (size == 1 || size == 3))
             return 1;
 
@@ -3968,7 +3968,7 @@ static int DisassembleAdvancedSIMDAcrossLanesInstr(struct instruction *i,
 
         unsigned s = size >> 1;
         unsigned compar = U == 0 ? size : s;
-       
+
         if(opcode == 12){
             instr_s = compar == 0 ? "fmaxnmv" : "fminnmv";
             instr_id = compar == 0 ? AD_INSTR_FMAXNMV : AD_INSTR_FMINNMV;
@@ -4160,7 +4160,7 @@ static int DisassembleCryptographicFourRegisterInstr(struct instruction *i,
     const char *Rn_s = GET_FP_REG(AD_RTBL_FP_V_128, Rn);
     const char *Rm_s = GET_FP_REG(AD_RTBL_FP_V_128, Rm);
     const char *Ra_s = GET_FP_REG(AD_RTBL_FP_V_128, Ra);
-    
+
     ADD_REG_OPERAND(out, Rd, _SZ(_128_BIT), NO_PREFER_ZR, _SYSREG(AD_NONE), _RTBL(AD_RTBL_FP_V_128));
     ADD_REG_OPERAND(out, Rn, _SZ(_128_BIT), NO_PREFER_ZR, _SYSREG(AD_NONE), _RTBL(AD_RTBL_FP_V_128));
     ADD_REG_OPERAND(out, Rm, _SZ(_128_BIT), NO_PREFER_ZR, _SYSREG(AD_NONE), _RTBL(AD_RTBL_FP_V_128));
